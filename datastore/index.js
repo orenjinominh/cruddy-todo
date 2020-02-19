@@ -21,10 +21,18 @@ exports.create = (text, callback) => {
 };
 
 exports.readAll = (callback) => {
-  var data = _.map(items, (text, id) => {
-    return { id, text };
+  var data = [];
+  fs.readdir(exports.dataDir, (err, files) => {
+    if (err) {
+      console.log('cannot read all files');
+    } else {
+      files.forEach((file) => {
+        var justNumber = file.substring(0, 5);
+        data.push({id: justNumber, text: justNumber});
+      });
+      callback(null, data);
+    }
   });
-  callback(null, data);
 };
 
 exports.readOne = (id, callback) => {
