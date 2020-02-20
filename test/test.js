@@ -153,7 +153,7 @@ describe('todos', () => {
     });
   });
 
-  describe('update', () => {
+  xdescribe('update', () => {
     beforeEach((done) => {
       todos.create('original todo', done);
     });
@@ -187,7 +187,7 @@ describe('todos', () => {
     });
   });
 
-  xdescribe('delete', () => {
+  describe('delete', () => {
     beforeEach((done) => {
       todos.create('delete this todo', done);
     });

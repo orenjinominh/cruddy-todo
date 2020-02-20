@@ -37,12 +37,10 @@ exports.readAll = (callback) => {
 
 exports.readOne = (id, callback) => {
   var thisPath = exports.dataDir + '/' + `${id}.txt`;
-  // console.log('path is here --->', thisPath);
   fs.readFile(thisPath, (err, file) => {
     if (err) {
       callback(new Error(`No item with id: ${id}`));
     } else {
-      console.log('file is this thing here --->', file);
       callback(null, {id: id, text: String(file)});
     }
   });
@@ -65,14 +63,14 @@ exports.update = (id, text, callback) => {
 };
 
 exports.delete = (id, callback) => {
-  var item = items[id];
-  delete items[id];
-  if (!item) {
-    // report an error if item not found
-    callback(new Error(`No item with id: ${id}`));
-  } else {
-    callback();
-  }
+  var thisPath = exports.dataDir + '/' + `${id}.txt`;
+  fs.unlink(thisPath, (err, file) => {
+    if (err) {
+      callback(new Error('Cannot delete this todo'));
+    } else {
+      callback(null);
+    }
+  });
 };
 
 // Config+Initialization code -- DO NOT MODIFY /////////////////////////////////
