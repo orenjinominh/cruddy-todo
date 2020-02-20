@@ -36,12 +36,27 @@ exports.readAll = (callback) => {
 };
 
 exports.readOne = (id, callback) => {
-  var text = items[id];
-  if (!text) {
-    callback(new Error(`No item with id: ${id}`));
-  } else {
-    callback(null, { id, text });
-  }
+  // var text = items[id];
+  // if (!text) {
+  //   callback(new Error(`No item with id: ${id}`));
+  // } else {
+  //   callback(null, { id, text });
+  // }
+
+  var data = [];
+  fs.readdir(exports.dataDir, (err, files) => {
+    if (err) {
+      console.log('cannot find that file');
+    } else {
+      files.forEach((file) => {
+        var justNumber = file.substring(0, 5);
+        if (file.id === id) {
+          data.push({id: justNumber, text: justNumber});
+        }
+      });
+      callback(null, data);
+    }
+  });
 };
 
 exports.update = (id, text, callback) => {
